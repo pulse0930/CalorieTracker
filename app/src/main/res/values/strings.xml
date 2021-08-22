@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">CalorieTracker</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_calories">Calories</string>
+    <string name="title_profile">Profile</string>
+    <string name="info_calorie_burnt_today">You have burnt %1$d kcals today</string>
+    <string name="title_morning">Morning</string>
+    <string name="title_afternoon">Afternoon</string>
+    <string name="title_evening">Evening</string>
+    <string name="title_night">Night</string>
+    <string name="title_height">Height</string>
+    <string name="title_weight">Weight</string>
+    <string name="title_dob">DOB</string>
+    <string name="title_gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="textview">TextView</string>
+    <string name="title">title</string>
+    <string name="secondary_text">secondary text</string>
+    <string name="supporting_text">supporting text</string>
+    <string name="content_description_media">content description media</string>
+    <string name="user_name">User name</string>
+</resources>
