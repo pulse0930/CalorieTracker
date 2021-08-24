@@ -10,7 +10,7 @@
         android:id="@+id/textView_info_calorie_burnt_today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:text="@string/info_calorie_burnt_today"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -18,19 +18,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
+        android:id="@+id/day_slot_layout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView_info_calorie_burnt_today">
-        <include android:id="@+id/day_slot_cardview_morning" layout="@layout/day_slot_cardview"/>
-        <include android:id="@+id/day_slot_cardview_afternoon" layout="@layout/day_slot_cardview"/>
-        <include android:id="@+id/day_slot_cardview_evening" layout="@layout/day_slot_cardview"/>
-        <include android:id="@+id/day_slot_cardview_night" layout="@layout/day_slot_cardview"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

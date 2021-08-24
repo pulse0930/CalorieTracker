@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.pulse0930.calorietracker.R
 import com.pulse0930.calorietracker.databinding.ProfileFragmentBinding
+import com.pulse0930.calorietracker.databinding.ProfileParametersCardviewBinding
 
 class ProfileFragment : Fragment() {
 
@@ -35,7 +38,20 @@ class ProfileFragment : Fragment() {
                 textView.text = it
             }
         })
+        addProfileInfo("Height", "172 cm")
+        addProfileInfo("Weight", "68 kg")
+        addProfileInfo("DOB", "01 Jan 1999")
+        addProfileInfo("Gender", "Male")
         return root
+    }
+
+    private fun addProfileInfo(profileParameter: String, value: String) {
+        val profileInfoLayout: LinearLayout = binding.profileInfoLayout
+        val view = layoutInflater.inflate(R.layout.profile_parameters_cardview, null)
+        var profileParametersCardviewBinding = ProfileParametersCardviewBinding.bind(view)
+        profileParametersCardviewBinding.profileInfoTitle.setText(profileParameter)
+        profileParametersCardviewBinding.profileInfoValue.setText(value)
+        profileInfoLayout.addView(view)
     }
 
     override fun onDestroyView() {

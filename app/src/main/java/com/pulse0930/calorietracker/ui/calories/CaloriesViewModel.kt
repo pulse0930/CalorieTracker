@@ -9,7 +9,7 @@ import com.pulse0930.calorietracker.R
 class CaloriesViewModel (application: Application): AndroidViewModel(application)  {
     var resources: Resources = getApplication<Application>().resources
     private val _text = MutableLiveData<String>().apply {
-        value = resources.getString(R.string.info_calorie_burnt_today)
+        value = resources.getString(R.string.info_calorie_burnt_today,100)
     }
     val text: LiveData<String> = _text
 }
