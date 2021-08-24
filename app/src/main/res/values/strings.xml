@@ -22,4 +22,6 @@
     <string name="supporting_text">supporting text</string>
     <string name="content_description_media">content description media</string>
     <string name="user_name">User name</string>
+    <string name="sign_in_prompt">Sign in using google account</string>
+    <string name="version">Version</string>
 </resources>

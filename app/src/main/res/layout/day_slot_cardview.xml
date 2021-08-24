@@ -48,6 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title"
+                        android:fontFamily="@font/montserrat_bold"
                         android:textAppearance="?attr/textAppearanceHeadline6" />
 
                     <TextView
@@ -56,6 +57,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@string/secondary_text"
+                        android:fontFamily="@font/montserrat"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary" />
 
@@ -67,7 +69,8 @@
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"
                     android:text="@string/supporting_text"
-                    android:textAlignment="center"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textAlignment="textEnd"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?android:attr/textColorSecondary" />
             </LinearLayout>
