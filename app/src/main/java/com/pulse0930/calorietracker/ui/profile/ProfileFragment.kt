@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.pulse0930.calorietracker.MainActivity
 import com.pulse0930.calorietracker.R
 import com.pulse0930.calorietracker.databinding.ProfileFragmentBinding
 import com.pulse0930.calorietracker.databinding.ProfileParametersCardviewBinding
@@ -38,6 +39,9 @@ class ProfileFragment : Fragment() {
                 textView.text = it
             }
         })
+        binding.signOutButton.setOnClickListener {
+            (activity as MainActivity?)?.signOut()
+        }
         addProfileInfo("Height", "172 cm")
         addProfileInfo("Weight", "68 kg")
         addProfileInfo("DOB", "01 Jan 1999")
@@ -58,4 +62,5 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

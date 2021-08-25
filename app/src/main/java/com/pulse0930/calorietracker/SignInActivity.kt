@@ -14,6 +14,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.pulse0930.calorietracker.databinding.ActivitySignInBinding
 
@@ -39,6 +40,7 @@ class SignInActivity : AppCompatActivity(){
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
+            .requestProfile()
             .build()
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
@@ -86,7 +88,8 @@ class SignInActivity : AppCompatActivity(){
             startActivity(intent)
             finish()
         }else{
-
+            //TODO: DIALOG TO SHOW SIGN IN FAILED
         }
     }
+
 }
