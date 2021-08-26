@@ -1,4 +1,4 @@
-package com.pulse0930.calorietracker
+package com.pulse0930.tracker
 
 import org.junit.Test
 

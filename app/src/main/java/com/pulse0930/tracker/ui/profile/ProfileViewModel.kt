@@ -1,4 +1,4 @@
-package com.pulse0930.calorietracker.ui.profile
+package com.pulse0930.tracker.ui.profile
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

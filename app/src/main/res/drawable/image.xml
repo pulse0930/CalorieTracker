@@ -6,6 +6,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <!--set image to be shown on circular image view-->
-    <item android:drawable="@drawable/ic_launcher_foreground"/>
+    <item android:drawable="@drawable/image_foreground"/>
     <item android:drawable="@drawable/circular"/>
 </layer-list>

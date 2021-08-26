@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "537273861420",
+    "project_id": "fitness-324103",
+    "storage_bucket": "fitness-324103.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537273861420:android:03ec7b257bc79ed9cd1889",
+        "android_client_info": {
+          "package_name": "com.pulse0930.tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537273861420-5vsclpgirchhs2uvpspcahptg74p95qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pulse0930.tracker",
+            "certificate_hash": "c52be52cf89fab64ac37ee5ff2202e52653481fd"
+          }
+        },
+        {
+          "client_id": "537273861420-6d250v7hiorv0682hlu3dj1ljvban87h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe3mpi9FmLkXFvlzhen1E5MjnIycW91nU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537273861420-6d250v7hiorv0682hlu3dj1ljvban87h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

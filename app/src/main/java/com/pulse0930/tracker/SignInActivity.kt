@@ -1,4 +1,4 @@
-package com.pulse0930.calorietracker
+package com.pulse0930.tracker
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,14 +14,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
-import com.pulse0930.calorietracker.databinding.ActivitySignInBinding
+import com.pulse0930.tracker.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity(){
     private lateinit var binding: ActivitySignInBinding
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var googleSignInActivityResultLauncher: ActivityResultLauncher<Intent>
+
     override fun onStart() {
         super.onStart()
         // Check for existing Google Sign In account, if the user is already signed in
@@ -91,5 +91,4 @@ class SignInActivity : AppCompatActivity(){
             //TODO: DIALOG TO SHOW SIGN IN FAILED
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.pulse0930.calorietracker.ui.profile
+package com.pulse0930.tracker.ui.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,10 +9,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.pulse0930.calorietracker.MainActivity
-import com.pulse0930.calorietracker.R
-import com.pulse0930.calorietracker.databinding.ProfileFragmentBinding
-import com.pulse0930.calorietracker.databinding.ProfileParametersCardviewBinding
+import com.pulse0930.tracker.MainActivity
+import com.pulse0930.tracker.R
+import com.pulse0930.tracker.databinding.ProfileFragmentBinding
+import com.pulse0930.tracker.databinding.ProfileParametersCardviewBinding
 
 class ProfileFragment : Fragment() {
 

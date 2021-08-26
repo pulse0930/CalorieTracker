@@ -6,12 +6,12 @@
     app:startDestination="@+id/navigation_calories">
     <fragment
         android:id="@+id/navigation_calories"
-        android:name="com.pulse0930.calorietracker.ui.calories.CaloriesFragment"
+        android:name="com.pulse0930.tracker.ui.calories.CaloriesFragment"
         android:label="calories_fragment"
         tools:layout="@layout/calories_fragment" />
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.pulse0930.calorietracker.ui.profile.ProfileFragment"
+        android:name="com.pulse0930.tracker.ui.profile.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
 </navigation>
