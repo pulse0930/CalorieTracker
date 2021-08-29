@@ -120,7 +120,8 @@ class CaloriesFragment : Fragment() {
      * Asynchronous task to read the history data. When the task succeeds, it will print out the
      * data.
      */
-    private fun readGoogleFitData(): Task<DataReadResponse> {
+    private fun readGoogleFitData(): Task<DataReadResponse>? {
+        if(!IsBetweenTimeRange()) return null
         val readRequest = queryFitnessData()
         return Fitness.getHistoryClient(activity, getGoogleAccount())
             .readData(readRequest)
@@ -137,14 +138,16 @@ class CaloriesFragment : Fragment() {
     /** Returns a [DataReadRequest] for all step count changes in the past week.  */
     private fun queryFitnessData(): DataReadRequest {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
-        //val now = Date() //calendar.time = now
-        calendar.set(Calendar.HOUR_OF_DAY, 9)
+        val now = Date()
+        calendar.time = now
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
-        val startTime = calendar.timeInMillis
-        calendar.add(Calendar.HOUR_OF_DAY, 15)
         val endTime = calendar.timeInMillis
+        calendar.set(Calendar.HOUR_OF_DAY, 9)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        val startTime = calendar.timeInMillis
 
         Log.i(TAG, "Range Start: ${dateFormat.format(startTime)}")
         Log.i(TAG, "Range End: ${dateFormat.format(endTime)}")
@@ -204,5 +207,23 @@ class CaloriesFragment : Fragment() {
                 }
             }
         }
+    }
+    fun IsBetweenTimeRange(): Boolean {
+        val calendar1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
+        calendar1.set(Calendar.HOUR_OF_DAY, 8)
+        calendar1.set(Calendar.MINUTE, 59)
+        calendar1.set(Calendar.SECOND, 59)
+        calendar1.set(Calendar.MILLISECOND, 0)
+        val calendar2 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
+        calendar2.set(Calendar.HOUR_OF_DAY, 23)
+        calendar2.set(Calendar.MINUTE, 59)
+        calendar2.set(Calendar.SECOND, 59)
+        val now = Date()
+        val calendar3 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
+        calendar3.time = now
+        if(calendar3.time.after(calendar1.time) && calendar3.time.before(calendar2.time)){
+            return true
+        }
+        return false
     }
 }

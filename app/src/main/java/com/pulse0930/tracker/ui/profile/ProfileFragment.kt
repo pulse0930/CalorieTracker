@@ -7,10 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -30,6 +27,7 @@ import com.squareup.picasso.Picasso
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.math.roundToInt
 
 
 class ProfileFragment : Fragment() {
@@ -70,10 +68,14 @@ class ProfileFragment : Fragment() {
     }
 
     private fun initializeProfileUI() {
-        binding.profileInfoLayout.getChildAt(0).findViewById<TextView>(R.id.profile_info_title).text = "Height"
-        binding.profileInfoLayout.getChildAt(1).findViewById<TextView>(R.id.profile_info_title).text = "Weight"
-        binding.profileInfoLayout.getChildAt(2).findViewById<TextView>(R.id.profile_info_title).text = "DOB"
-        binding.profileInfoLayout.getChildAt(3).findViewById<TextView>(R.id.profile_info_title).text = "Gender"
+        binding.profileInfoLayout.getChildAt(0)
+            .findViewById<TextView>(R.id.profile_info_title).text = "Height"
+        binding.profileInfoLayout.getChildAt(1)
+            .findViewById<TextView>(R.id.profile_info_title).text = "Weight"
+        binding.profileInfoLayout.getChildAt(2)
+            .findViewById<TextView>(R.id.profile_info_title).text = "DOB"
+        binding.profileInfoLayout.getChildAt(3)
+            .findViewById<TextView>(R.id.profile_info_title).text = "Gender"
     }
 
     override fun onDestroyView() {
@@ -129,6 +131,7 @@ class ProfileFragment : Fragment() {
             .readData(readRequest)
             .addOnSuccessListener { dataReadResponse ->
                 printData(dataReadResponse)
+                updateUI(dataReadResponse)
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "There was a problem reading the data.", e)
@@ -144,5 +147,26 @@ class ProfileFragment : Fragment() {
             .setTimeRange(1, calendar.timeInMillis, TimeUnit.MILLISECONDS)
             .setLimit(1)
             .build()
+    }
+
+    private fun updateUI(dataReadResponse: DataReadResponse) {
+        if (dataReadResponse.dataSets.isNotEmpty()) {
+            dataReadResponse.dataSets.forEach {
+                val dp = it.dataPoints.get(0)
+                val value = dp.getValue(it.dataType.fields.get(0)).asFloat()
+                when (it.dataType) {
+                    DataType.TYPE_WEIGHT -> {
+                        binding.profileInfoLayout.getChildAt(0)
+                            .findViewById<TextView>(R.id.profile_info_value).text =
+                            "${value.roundToInt()} kg"
+                    }
+                    DataType.TYPE_HEIGHT -> {
+                        binding.profileInfoLayout.getChildAt(1)
+                            .findViewById<TextView>(R.id.profile_info_value).text =
+                            "${(value * 100).roundToInt()} cm"
+                    }
+                }
+            }
+        }
     }
 }
