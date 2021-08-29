@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -29,7 +30,8 @@ class SignInActivity : AppCompatActivity(){
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        updateUI(account)
+        if(account!=null)
+            updateUI(account)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,15 +61,15 @@ class SignInActivity : AppCompatActivity(){
     }
 
     private fun registerActivities() {
-        googleSignInActivityResultLauncher = registerForActivityResult(StartActivityForResult(),
-            ActivityResultCallback { result: ActivityResult ->
-                if (result.resultCode == RESULT_OK) {
-                    // The Task returned from this call is always completed, no need to attach
-                    // a listener.
-                    val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-                    handleSignInResult(task)
-                }
-            })
+        googleSignInActivityResultLauncher = registerForActivityResult(StartActivityForResult()
+        ) { result: ActivityResult ->
+            if (result.resultCode == RESULT_OK) {
+                // The Task returned from this call is always completed, no need to attach
+                // a listener.
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                handleSignInResult(task)
+            }
+        }
     }
 
     private fun signIn() {
@@ -89,12 +91,19 @@ class SignInActivity : AppCompatActivity(){
     }
 
     private fun updateUI(account: GoogleSignInAccount?) {
-        if(account!=null){
-            val intent = Intent(this@SignInActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }else{
-            //TODO: DIALOG TO SHOW SIGN IN FAILED
-        }
+        val intent = Intent(this@SignInActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun showSignedOutDialog() {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.apply {
+            setIcon(R.drawable.ic_baseline_error_outline_24)
+            setTitle("Sign out")
+            setMessage("You have successfully signed out")
+            setPositiveButton("OK") { _, _ ->
+
+            }
+        }.create().show()
     }
 }

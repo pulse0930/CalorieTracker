@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -36,14 +35,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp">
-                    <!-- Title, secondary and supporting text -->
+                <!-- Title, secondary and supporting text -->
                 <TextView
                     android:id="@+id/profile_info_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/title"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="@string/title"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
                 <TextView
@@ -51,8 +50,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/supporting_text"
                     android:fontFamily="@font/montserrat"
+                    android:text="N/A"
                     android:textAlignment="textEnd"
                     android:textAppearance="?attr/textAppearanceHeadline6"
                     android:textColor="?android:attr/textColorSecondary" />

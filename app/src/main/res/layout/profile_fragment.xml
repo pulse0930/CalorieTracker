@@ -56,6 +56,11 @@
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sign_out_button" />
+        app:layout_constraintTop_toBottomOf="@+id/sign_out_button" >
+            <include layout="@layout/profile_cardview" android:id="@+id/user_height"/>
+            <include layout="@layout/profile_cardview" android:id="@+id/user_weight"/>
+            <include layout="@layout/profile_cardview" android:id="@+id/user_dob"/>
+            <include layout="@layout/profile_cardview" android:id="@+id/user_gender"/>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
