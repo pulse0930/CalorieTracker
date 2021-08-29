@@ -44,6 +44,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView_info_calorie_burnt_today"></LinearLayout>
+            app:layout_constraintTop_toBottomOf="@+id/textView_info_calorie_burnt_today">
+                <include layout="@layout/day_slot_cardview" android:id="@+id/morning"/>
+                <include layout="@layout/day_slot_cardview" android:id="@+id/afternoon"/>
+                <include layout="@layout/day_slot_cardview" android:id="@+id/evening"/>
+                <include layout="@layout/day_slot_cardview" android:id="@+id/night"/>
+        </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

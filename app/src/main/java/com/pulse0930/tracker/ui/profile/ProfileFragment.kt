@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -21,7 +23,6 @@ import com.google.android.gms.tasks.Task
 import com.pulse0930.tracker.MainActivity
 import com.pulse0930.tracker.R
 import com.pulse0930.tracker.databinding.ProfileFragmentBinding
-import com.pulse0930.tracker.databinding.ProfileParametersCardviewBinding
 import com.pulse0930.tracker.ui.calories.GOOGLE_FIT_PERMISSIONS_REQUEST_CODE
 import com.pulse0930.tracker.ui.calories.TAG
 import com.pulse0930.tracker.util.printData
@@ -37,7 +38,6 @@ class ProfileFragment : Fragment() {
     private var _binding: ProfileFragmentBinding? = null
     private val binding get() = _binding!!
 
-    //private fun getGoogleAccount() = GoogleSignIn.getLastSignedInAccount(activity)
     private fun getGoogleAccount() = GoogleSignIn.getAccountForExtension(activity, fitnessOptions)
     private val fitnessOptions: FitnessOptions by lazy {
         FitnessOptions.builder()
@@ -64,22 +64,16 @@ class ProfileFragment : Fragment() {
         binding.signOutButton.setOnClickListener {
             (activity as MainActivity?)?.signOut()
         }
+        initializeProfileUI()
         accessGoogleFit()
-        getGoogleAccount().requestedScopes
-//        addProfileInfo("Height", "163 cm")
-//        addProfileInfo("Weight", "78 kg")
-//        addProfileInfo("DOB", "25 Jul 1993")
-//        addProfileInfo("Gender", "Male")
         return root
     }
 
-    private fun addProfileInfo(profileParameter: String, value: String) {
-        val profileInfoLayout: LinearLayout = binding.profileInfoLayout
-        val view = layoutInflater.inflate(R.layout.profile_parameters_cardview, null)
-        var profileParametersCardviewBinding = ProfileParametersCardviewBinding.bind(view)
-        profileParametersCardviewBinding.profileInfoTitle.setText(profileParameter)
-        profileParametersCardviewBinding.profileInfoValue.setText(value)
-        profileInfoLayout.addView(view)
+    private fun initializeProfileUI() {
+        binding.profileInfoLayout.getChildAt(0).findViewById<TextView>(R.id.profile_info_title).text = "Height"
+        binding.profileInfoLayout.getChildAt(1).findViewById<TextView>(R.id.profile_info_title).text = "Weight"
+        binding.profileInfoLayout.getChildAt(2).findViewById<TextView>(R.id.profile_info_title).text = "DOB"
+        binding.profileInfoLayout.getChildAt(3).findViewById<TextView>(R.id.profile_info_title).text = "Gender"
     }
 
     override fun onDestroyView() {

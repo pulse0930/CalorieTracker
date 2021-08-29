@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_marginTop="16dp"
-                    android:text="@string/supporting_text"
+                    android:text="0 kcal"
                     android:fontFamily="@font/montserrat_bold"
                     android:textAlignment="textEnd"
                     android:textAppearance="?attr/textAppearanceHeadline6"

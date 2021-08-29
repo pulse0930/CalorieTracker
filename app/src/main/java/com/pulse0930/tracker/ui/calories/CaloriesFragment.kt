@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -19,10 +18,7 @@ import com.google.android.gms.fitness.data.DataType
 import com.google.android.gms.fitness.request.DataReadRequest
 import com.google.android.gms.fitness.result.DataReadResponse
 import com.google.android.gms.tasks.Task
-import com.pulse0930.tracker.R
 import com.pulse0930.tracker.databinding.CaloriesFragmentBinding
-import com.pulse0930.tracker.databinding.DaySlotCardviewBinding
-import com.pulse0930.tracker.util.dumpDataSet
 import com.pulse0930.tracker.util.getStartTimeString
 import java.text.DateFormat
 import java.util.*
@@ -59,18 +55,20 @@ class CaloriesFragment : Fragment() {
         caloriesViewModel.textDate.observe(viewLifecycleOwner, {
             binding.textViewDate.text = it
         })
+        initializeDaySlotsUI()
         accessGoogleFit()
         return root
     }
 
-    fun addDaySlot(slotName: String?, slotTime: String?, calorieBurnt: String?) {
-        val daySlotLayout: LinearLayout = binding.daySlotLayout
-        val view = layoutInflater.inflate(R.layout.day_slot_cardview, null)
-        var daySlotCardviewBinding = DaySlotCardviewBinding.bind(view)
-        daySlotCardviewBinding.slotNameTextView.text = slotName
-        daySlotCardviewBinding.slotTimeTextView.text = slotTime
-        daySlotCardviewBinding.calorieBurntTextView.text = calorieBurnt
-        daySlotLayout.addView(view)
+    private fun initializeDaySlotsUI() {
+        binding.morning.slotNameTextView.text = "Morning"
+        binding.morning.slotTimeTextView.text = "9 AM - Noon"
+        binding.afternoon.slotNameTextView.text = "Afternoon"
+        binding.afternoon.slotTimeTextView.text = "Noon - 4 PM"
+        binding.evening.slotNameTextView.text = "Evening"
+        binding.evening.slotTimeTextView.text = "4 AM - 9 PM"
+        binding.night.slotNameTextView.text = "Night"
+        binding.night.slotTimeTextView.text = "9 PM - Midnight"
     }
 
     override fun onDestroyView() {
@@ -171,7 +169,7 @@ class CaloriesFragment : Fragment() {
                 caloriesViewModel.text.observe(viewLifecycleOwner, {
                     binding.textViewInfoCalorieBurntToday.text = it.format(calorieBurnt)
                 })
-                dumpDataSet(dataReadResponse)
+                //dumpDataSet(dataReadResponse)
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "There was a problem reading the data.", e)
@@ -185,23 +183,19 @@ class CaloriesFragment : Fragment() {
                 val dp: DataPoint = bucket.dataSets.get(0).dataPoints.get(0)
                 when (dp.getStartTimeString()) {
                     "11:00:00" -> {
-                        addDaySlot("Morning", "09:00 - Noon", sum.roundToInt().toString() + " kcal")
+                        binding.morning.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
                         sum = 0.0f
                     }
                     "15:00:00" -> {
-                        addDaySlot("Noon", "Noon - 4 PM", sum.roundToInt().toString() + " kcal")
+                        binding.afternoon.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
                         sum = 0.0f
                     }
                     "20:00:00" -> {
-                        addDaySlot("Evening", "4 PM - 9 PM", sum.roundToInt().toString() + " kcal")
+                        binding.evening.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
                         sum = 0.0f
                     }
                     "23:00:00" -> {
-                        addDaySlot(
-                            "Night",
-                            "9 PM - Midnight",
-                            sum.roundToInt().toString() + " kcal"
-                        )
+                        binding.night.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
                         sum = 0.0f
                     }
                     else -> {

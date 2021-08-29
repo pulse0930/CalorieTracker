@@ -10,7 +10,9 @@
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
         <entry key="app/src/main/res/layout/calories_fragment.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/profile_CardView.xml" value="0.11979166666666667" />
         <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/profile_parameters_cardview.xml" value="0.14673913043478262" />
       </map>
     </option>
   </component>
