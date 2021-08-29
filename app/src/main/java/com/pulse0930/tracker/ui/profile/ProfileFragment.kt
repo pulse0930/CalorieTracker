@@ -24,6 +24,7 @@ import com.pulse0930.tracker.ui.calories.GOOGLE_FIT_PERMISSIONS_REQUEST_CODE
 import com.pulse0930.tracker.ui.calories.TAG
 import com.pulse0930.tracker.util.printData
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
