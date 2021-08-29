@@ -7,11 +7,11 @@
     <fragment
         android:id="@+id/navigation_calories"
         android:name="com.pulse0930.tracker.ui.calories.CaloriesFragment"
-        android:label="calories_fragment"
+        android:label="@string/app_name"
         tools:layout="@layout/calories_fragment" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.pulse0930.tracker.ui.profile.ProfileFragment"
-        android:label="profile_fragment"
+         android:label="@string/app_name"
         tools:layout="@layout/profile_fragment" />
 </navigation>

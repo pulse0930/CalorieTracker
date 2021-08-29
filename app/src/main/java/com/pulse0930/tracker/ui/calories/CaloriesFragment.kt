@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task
 import com.pulse0930.tracker.R
 import com.pulse0930.tracker.databinding.CaloriesFragmentBinding
 import com.pulse0930.tracker.databinding.DaySlotCardviewBinding
+import com.pulse0930.tracker.util.getEndTimeString
 import com.pulse0930.tracker.util.getStartTimeString
 import java.text.DateFormat
 import java.util.*
@@ -56,6 +57,9 @@ class CaloriesFragment : Fragment() {
         _binding = CaloriesFragmentBinding.inflate(inflater, container, false)
 
         val root: View = binding.root
+        caloriesViewModel.textDate.observe(viewLifecycleOwner, {
+            binding.textViewDate.text = it
+        })
         accessGoogleFit()
         return root
     }
@@ -205,8 +209,8 @@ class CaloriesFragment : Fragment() {
         for (dp in dataSet.dataPoints) {
             Log.i(TAG, "Data point:")
             Log.i(TAG, "\tType: ${dp.dataType.name}")
-            Log.i(TAG, "\tStart: ${dp.getStartTime(TimeUnit.HOURS)}")
-            Log.i(TAG, "\tEnd: ${dp.getStartTime(TimeUnit.HOURS)}")
+            Log.i(TAG, "\tStart: ${dp.getStartTimeString()}")
+            Log.i(TAG, "\tEnd: ${dp.getEndTimeString()}")
             dp.dataType.fields.forEach {
                 Log.i(TAG, "\tField: ${it.name} Value: ${dp.getValue(it)}")
             }

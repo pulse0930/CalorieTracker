@@ -1,6 +1,7 @@
 package com.pulse0930.tracker
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.ActivityResult
@@ -16,6 +17,7 @@ import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.pulse0930.tracker.databinding.ActivitySignInBinding
+import com.pulse0930.tracker.util.getVersion
 
 class SignInActivity : AppCompatActivity(){
     private lateinit var binding: ActivitySignInBinding
@@ -34,7 +36,11 @@ class SignInActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        try {
+            binding.version.text = String.format("%s %s", getString(R.string.version), getVersion(packageManager, applicationContext))
+        } catch (e: PackageManager.NameNotFoundException ) {
+            e.printStackTrace()
+        }
         registerActivities()
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.

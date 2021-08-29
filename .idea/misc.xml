@@ -7,6 +7,9 @@
         <entry key="app/src/main/res/drawable/image.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/drawable/image_background.xml" value="0.21458333333333332" />
         <entry key="app/src/main/res/drawable/image_foreground.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/calories_fragment.xml" value="0.18" />
         <entry key="app/src/main/res/layout/profile_fragment.xml" value="0.25" />
       </map>
     </option>
