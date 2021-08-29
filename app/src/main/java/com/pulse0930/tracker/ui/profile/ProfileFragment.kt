@@ -32,13 +32,7 @@ class ProfileFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    private fun getGoogleAccount() = GoogleSignIn.getAccountForExtension(activity, fitnessOptions)
-    private val fitnessOptions: FitnessOptions by lazy {
-        FitnessOptions.builder()
-            .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED, FitnessOptions.ACCESS_READ)
-            .addDataType(DataType.TYPE_CALORIES_EXPENDED, FitnessOptions.ACCESS_READ)
-            .build()
-    }
+    private fun getGoogleAccount() = GoogleSignIn.getLastSignedInAccount(activity)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,9 +51,9 @@ class ProfileFragment : Fragment() {
             (activity as MainActivity?)?.signOut()
         }
 
-        addProfileInfo("Height", "172 cm")
-        addProfileInfo("Weight", "68 kg")
-        addProfileInfo("DOB", "01 Jan 1999")
+        addProfileInfo("Height", "163 cm")
+        addProfileInfo("Weight", "78 kg")
+        addProfileInfo("DOB", "25 Jul 1993")
         addProfileInfo("Gender", "Male")
         return root
     }

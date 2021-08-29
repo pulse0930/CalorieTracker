@@ -12,13 +12,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pulse0930.tracker.databinding.ActivityMainBinding
-
+import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.api.Scope
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var mGoogleSignInClient: GoogleSignInClient
+
     override fun onStart() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestScopes(Scope(Scopes.PLUS_ME))
             .requestEmail()
             .requestProfile()
             .build()
@@ -34,8 +37,6 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_calories,

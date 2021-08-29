@@ -30,7 +30,8 @@ class SignInActivity : AppCompatActivity(){
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         val account = GoogleSignIn.getLastSignedInAccount(this)
-        updateUI(account)
+        if(account!=null)
+            updateUI(account)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,20 +91,16 @@ class SignInActivity : AppCompatActivity(){
     }
 
     private fun updateUI(account: GoogleSignInAccount?) {
-        if(account!=null){
-            val intent = Intent(this@SignInActivity, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }else{
-            showSignInFailedDialog()
-        }
+        val intent = Intent(this@SignInActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
-    private fun showSignInFailedDialog() {
+    private fun showSignedOutDialog() {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.apply {
             setIcon(R.drawable.ic_baseline_error_outline_24)
-            setTitle("Sign in failed")
-            setMessage("Could not sign in using the google account provided, Please try again later")
+            setTitle("Sign out")
+            setMessage("You have successfully signed out")
             setPositiveButton("OK") { _, _ ->
 
             }
