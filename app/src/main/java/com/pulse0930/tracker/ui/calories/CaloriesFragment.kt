@@ -118,7 +118,25 @@ class CaloriesFragment : Fragment() {
         """.trimIndent()
         Log.e(TAG, message)
     }
-
+    /**
+     * Asynchronous task to read the history data. When the task succeeds, it will print out the
+     * data.
+     */
+    private fun dailyTotalCalorieExpended(): Task<DataSet> {
+        return Fitness.getHistoryClient(activity, getGoogleAccount())
+            .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
+            .addOnSuccessListener { dataReadResponse ->
+                val dp: DataPoint = dataReadResponse.dataPoints.get(0)
+                val calorieBurnt = dp.getValue(dp.dataType.fields.get(0)).asFloat().roundToInt()
+                caloriesViewModel.text.observe(viewLifecycleOwner, {
+                    binding.textViewInfoCalorieBurntToday.text = it.format(calorieBurnt)
+                })
+                dumpDataSet(dataReadResponse)
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "There was a problem reading the data.", e)
+            }
+    }
     /**
      * Asynchronous task to read the history data. When the task succeeds, it will print out the
      * data.
@@ -215,25 +233,5 @@ class CaloriesFragment : Fragment() {
                 Log.i(TAG, "\tField: ${it.name} Value: ${dp.getValue(it)}")
             }
         }
-    }
-
-    /**
-     * Asynchronous task to read the history data. When the task succeeds, it will print out the
-     * data.
-     */
-    private fun dailyTotalCalorieExpended(): Task<DataSet> {
-        return Fitness.getHistoryClient(activity, getGoogleAccount())
-            .readDailyTotal(DataType.TYPE_CALORIES_EXPENDED)
-            .addOnSuccessListener { dataReadResponse ->
-                val dp: DataPoint = dataReadResponse.dataPoints.get(0)
-                val calorieBurnt = dp.getValue(dp.dataType.fields.get(0)).asFloat().roundToInt()
-                caloriesViewModel.text.observe(viewLifecycleOwner, {
-                    binding.textViewInfoCalorieBurntToday.text = it.format(calorieBurnt)
-                })
-                dumpDataSet(dataReadResponse)
-            }
-            .addOnFailureListener { e ->
-                Log.e(TAG, "There was a problem reading the data.", e)
-            }
     }
 }

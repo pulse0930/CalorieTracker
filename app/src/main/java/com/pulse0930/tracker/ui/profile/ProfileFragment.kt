@@ -1,6 +1,8 @@
 package com.pulse0930.tracker.ui.profile
 
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,13 @@ import com.pulse0930.tracker.MainActivity
 import com.pulse0930.tracker.R
 import com.pulse0930.tracker.databinding.ProfileFragmentBinding
 import com.pulse0930.tracker.databinding.ProfileParametersCardviewBinding
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.fitness.FitnessOptions
+import com.google.android.gms.fitness.data.DataType
+import com.squareup.picasso.Picasso
+
 
 class ProfileFragment : Fragment() {
 
@@ -22,6 +31,14 @@ class ProfileFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private fun getGoogleAccount() = GoogleSignIn.getAccountForExtension(activity, fitnessOptions)
+    private val fitnessOptions: FitnessOptions by lazy {
+        FitnessOptions.builder()
+            .addDataType(DataType.AGGREGATE_CALORIES_EXPENDED, FitnessOptions.ACCESS_READ)
+            .addDataType(DataType.TYPE_CALORIES_EXPENDED, FitnessOptions.ACCESS_READ)
+            .build()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,14 +51,12 @@ class ProfileFragment : Fragment() {
 
         val root: View = binding.root
         val textView: TextView = binding.textProfile
-        profileViewModel.text.observe(viewLifecycleOwner, Observer {
-            if (textView != null) {
-                textView.text = it
-            }
-        })
+        textView.text =getGoogleAccount().givenName+" "+getGoogleAccount().familyName
+        Picasso.get().load(getGoogleAccount().photoUrl.toString()).into(binding.imageView)
         binding.signOutButton.setOnClickListener {
             (activity as MainActivity?)?.signOut()
         }
+
         addProfileInfo("Height", "172 cm")
         addProfileInfo("Weight", "68 kg")
         addProfileInfo("DOB", "01 Jan 1999")
