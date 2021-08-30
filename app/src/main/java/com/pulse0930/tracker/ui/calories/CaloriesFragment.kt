@@ -19,7 +19,7 @@ import com.google.android.gms.fitness.request.DataReadRequest
 import com.google.android.gms.fitness.result.DataReadResponse
 import com.google.android.gms.tasks.Task
 import com.pulse0930.tracker.databinding.CaloriesFragmentBinding
-import com.pulse0930.tracker.util.getStartTimeString
+import com.pulse0930.tracker.util.*
 import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -121,12 +121,17 @@ class CaloriesFragment : Fragment() {
      * data.
      */
     private fun readGoogleFitData(): Task<DataReadResponse>? {
-        if(!IsBetweenTimeRange()) return null
+        if (!IsBetweenTimeRange(
+                getCalendar(8, 59, 59),
+                getCalendar(23, 59, 59),
+                getCalendarNow()
+            )
+        ) return null
         val readRequest = queryFitnessData()
         return Fitness.getHistoryClient(activity, getGoogleAccount())
             .readData(readRequest)
             .addOnSuccessListener { dataReadResponse ->
-                //printData(dataReadResponse)
+                printData(dataReadResponse)
                 updateUI(dataReadResponse)
             }
             .addOnFailureListener { e ->
@@ -134,20 +139,15 @@ class CaloriesFragment : Fragment() {
             }
     }
 
-
     /** Returns a [DataReadRequest] for all step count changes in the past week.  */
     private fun queryFitnessData(): DataReadRequest {
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
-        val now = Date()
-        calendar.time = now
+        val calendar = getCalendarNow()
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
+        if(calendar.get(Calendar.HOUR_OF_DAY).equals(9))
+            calendar.add(Calendar.HOUR_OF_DAY,1)
         val endTime = calendar.timeInMillis
-        calendar.set(Calendar.HOUR_OF_DAY, 9)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        val startTime = calendar.timeInMillis
+        val startTime = getCalendar(9,0,0).timeInMillis
 
         Log.i(TAG, "Range Start: ${dateFormat.format(startTime)}")
         Log.i(TAG, "Range End: ${dateFormat.format(endTime)}")
@@ -181,49 +181,34 @@ class CaloriesFragment : Fragment() {
 
     private fun updateUI(dataReadResponse: DataReadResponse) {
         if (dataReadResponse.buckets.isNotEmpty()) {
-            var sum = 0.0f
+            var slot = arrayOf(0.0f, 0.0f, 0.0f, 0.0f)
             for (bucket in dataReadResponse.buckets) {
                 val dp: DataPoint = bucket.dataSets.get(0).dataPoints.get(0)
-                when (dp.getStartTimeString()) {
-                    "11:00:00" -> {
-                        binding.morning.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
-                        sum = 0.0f
-                    }
-                    "15:00:00" -> {
-                        binding.afternoon.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
-                        sum = 0.0f
-                    }
-                    "20:00:00" -> {
-                        binding.evening.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
-                        sum = 0.0f
-                    }
-                    "23:00:00" -> {
-                        binding.night.calorieBurntTextView.text = sum.roundToInt().toString() + " kcal"
-                        sum = 0.0f
-                    }
-                    else -> {
-                        sum += dp.getValue(dp.dataType.fields.get(0)).asFloat()
-                    }
+                if (arrayOf("09:00:00", "10:00:00", "11:00:00").contains(dp.getStartTimeString())) {
+                    slot[0] += dp.getValue(dp.dataType.fields.get(0)).asFloat()
+                } else if (arrayOf(
+                        "12:00:00",
+                        "13:00:00",
+                        "14:00:00",
+                        "15:00:00"
+                    ).contains(dp.getStartTimeString())
+                ) {
+                    slot[1] += dp.getValue(dp.dataType.fields.get(0)).asFloat()
+                } else if (arrayOf(
+                        "21:00:00",
+                        "22:00:00",
+                        "23:00:00"
+                    ).contains(dp.getStartTimeString())
+                ) {
+                    slot[3] += dp.getValue(dp.dataType.fields.get(0)).asFloat()
+                } else {
+                    slot[2] += dp.getValue(dp.dataType.fields.get(0)).asFloat()
                 }
             }
+            binding.morning.calorieBurntTextView.text = slot[0].roundToInt().toString() + " kcal"
+            binding.afternoon.calorieBurntTextView.text = slot[1].roundToInt().toString() + " kcal"
+            binding.evening.calorieBurntTextView.text = slot[3].roundToInt().toString() + " kcal"
+            binding.night.calorieBurntTextView.text = slot[2].roundToInt().toString() + " kcal"
         }
-    }
-    fun IsBetweenTimeRange(): Boolean {
-        val calendar1 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
-        calendar1.set(Calendar.HOUR_OF_DAY, 8)
-        calendar1.set(Calendar.MINUTE, 59)
-        calendar1.set(Calendar.SECOND, 59)
-        calendar1.set(Calendar.MILLISECOND, 0)
-        val calendar2 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
-        calendar2.set(Calendar.HOUR_OF_DAY, 23)
-        calendar2.set(Calendar.MINUTE, 59)
-        calendar2.set(Calendar.SECOND, 59)
-        val now = Date()
-        val calendar3 = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
-        calendar3.time = now
-        if(calendar3.time.after(calendar1.time) && calendar3.time.before(calendar2.time)){
-            return true
-        }
-        return false
     }
 }
