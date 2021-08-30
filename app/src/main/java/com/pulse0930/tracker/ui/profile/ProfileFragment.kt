@@ -22,6 +22,7 @@ import com.pulse0930.tracker.R
 import com.pulse0930.tracker.databinding.ProfileFragmentBinding
 import com.pulse0930.tracker.ui.calories.GOOGLE_FIT_PERMISSIONS_REQUEST_CODE
 import com.pulse0930.tracker.ui.calories.TAG
+import com.pulse0930.tracker.util.getCalendar
 import com.pulse0930.tracker.util.printData
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Transformation
@@ -41,9 +42,9 @@ class ProfileFragment : Fragment() {
     private val fitnessOptions: FitnessOptions by lazy {
         FitnessOptions.builder()
             .addDataType(DataType.AGGREGATE_HEIGHT_SUMMARY, FitnessOptions.ACCESS_READ)
-            .addDataType(DataType.TYPE_HEIGHT, FitnessOptions.ACCESS_READ)
             .addDataType(DataType.AGGREGATE_WEIGHT_SUMMARY, FitnessOptions.ACCESS_READ)
             .addDataType(DataType.TYPE_HEIGHT, FitnessOptions.ACCESS_READ)
+            .addDataType(DataType.TYPE_WEIGHT, FitnessOptions.ACCESS_READ)
             .build()
     }
     private val dateFormat = DateFormat.getDateTimeInstance()
@@ -141,7 +142,8 @@ class ProfileFragment : Fragment() {
 
     /** Returns a [DataReadRequest] for all step count changes in the past week.  */
     private fun queryFitnessData(): DataReadRequest {
-        val calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+5:30"))
+        val calendar = getCalendar(23,59,59)
+        Log.d("TIME",calendar.time.toString())
         return DataReadRequest.Builder()
             .read(DataType.TYPE_WEIGHT)
             .read(DataType.TYPE_HEIGHT)
